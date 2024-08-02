@@ -67,6 +67,42 @@ public class RationalNumber {
         return this.denominator == other.denominator && this.numerator == other.numerator;
     }
 
+
+
+
+    // Getters
+    public int getNumerator() {
+        return numerator;
+    }
+
+    public int getDenominator() {
+        return denominator;
+    }
+
+    // Nouvelle méthode update
+    public void update(int numerator, int denominator) {
+        if (denominator == 0) {
+            throw new IllegalArgumentException("Denominator cannot be 0.");
+        }
+        this.numerator = numerator;
+        this.denominator = denominator;
+        reduce();
+    }
+
+    // Constructeur de copie
+    public RationalNumber(RationalNumber original) {
+        this.numerator = original.numerator;
+        this.denominator = original.denominator;
+        // Pas besoin d'appeler reduce() car l'original est déjà réduit
+    }
+
+
+
+
+
+
+
+
     /**
      * Converts the rational number to the typical way fractions are viewed "numerator/denominator".
      * 0 is represented as "0/1" and 1 is represented as "1/1".

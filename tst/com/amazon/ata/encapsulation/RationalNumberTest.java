@@ -95,15 +95,7 @@ public class RationalNumberTest {
                                 "The constructor should not allow an illegal denominator value of 0.");
     }
 
-    @Test
-    public void update_withZeroDenominator_throwsException() {
-        //GIVEN
-        RationalNumber half = new RationalNumber(1, 2);
 
-        //WHEN & THEN
-        Assertions.assertThrows(IllegalArgumentException.class, () -> half.denominator = 0, "You should not "
-            + "be able to edit an existing RationalNumber and make it invalid with a 0 value denominator.");
-    }
 
     @Test
     public void equals_withMixedReducedNonReducedRationals_returnsEqual() {
@@ -118,18 +110,47 @@ public class RationalNumberTest {
         assertTrue(equal, "1/2 and 2/4 should be equal.");
     }
 
+
+
+    @Test
+    public void update_withZeroDenominator_throwsException() {
+        // GIVEN
+        RationalNumber half = new RationalNumber(1, 2);
+
+        // WHEN & THEN
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> half.update(1, 0),
+                "You should not be able to update an existing RationalNumber with a 0 value denominator.");
+    }
+
     @Test
     public void equals_withUpdatedReducedNonReducedRationals_returnsEqual() {
-        //GIVEN
+        // GIVEN
         RationalNumber half = new RationalNumber(1, 2);
         RationalNumber half2 = new RationalNumber(1, 2);
-        half2.numerator = 2;
-        half2.denominator = 4;
+        half2.update(2, 4);
 
-        //WHEN
+        // WHEN
         boolean equal = half.equals(half2);
 
-        //THEN
+        // THEN
         assertTrue(equal, "1/2 and 2/4 should be equal.");
     }
+
+    @Test
+    public void constructor_existingRationalNumber_createsCopy() {
+        // GIVEN
+        RationalNumber original = new RationalNumber(2, 3);
+
+        // WHEN
+        RationalNumber copy = new RationalNumber(original);
+
+        // THEN
+        assertEquals(original.getNumerator(), copy.getNumerator(), "Numerators should be equal");
+        assertEquals(original.getDenominator(), copy.getDenominator(), "Denominators should be equal");
+        assertTrue(original != copy, "Copy should be a new object");
+    }
+
+
+
 }
